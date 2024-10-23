@@ -65,6 +65,39 @@ func yearsUntilEvents(age int) (yearsUntilAdult int, yearsUntilDrinking int, yea
 }
 
 
+//FUN 4
+func reformat(message string, formatter func(string) string) string {
+    formattedMessage := formatter(formatter(formatter(message)))
+    return "TEXTIO: " + formattedMessage
+}
+
+
+//Anonymous Functions
+func printReports(intro, body, outro string) {
+	introCost := func(msg string) int {
+		return 2 * len(msg)
+	}
+	
+	bodyCost := func(msg string) int {
+		return 3 * len(msg)
+	}
+
+	outroCost := func(msg string) int {
+		return 4 * len(msg)
+	}
+
+	printCostReport(introCost, intro)
+	printCostReport(bodyCost, body)
+	printCostReport(outroCost, outro)
+}
+
+func printCostReport(costCalculator func(string) int, message string) {
+	cost := costCalculator(message)
+	fmt.Printf(`Message: "%s" Cost: %v cents`, message, cost)
+	fmt.Println()
+}
+
+
 func main() {
 	fmt.Println(concat("Lane,", " happy birthday!"))
 	fmt.Println(concat("Elon,", " hope that Tesla thing works out"))
@@ -84,4 +117,19 @@ func main() {
 	tier := "premium" // You can change this to "basic", "premium", or "enterprise"
 	message := getProductMessage(tier)
 	fmt.Println(message)
+
+
+	//FUN 4
+	message4 := "General Kenobi"
+    
+    // Example formatter function that adds a period at the end of the string
+    formatter := func(s string) string {
+        return s + "."
+    }
+    
+    // Use the reformat function with the message and formatter
+    result := reformat(message4, formatter)
+    
+    // Print the result
+    fmt.Println(result) // Output: TEXTIO: General Kenobi...
 }
