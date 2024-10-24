@@ -53,6 +53,7 @@ type truck struct {
 }
 //------------------------------------------------------------------
 
+
 func main(){
 	// myCar := car{}
 	// myCar.brand = "BMW"
