@@ -1,6 +1,7 @@
 package main
 
 import "fmt"
+import "math"
 
 type car struct {
 	brand      string
@@ -81,6 +82,33 @@ func (authI authenticationInfo) getBasicAuth() string{
 
 //-------------------------------------------------------------------------
 
+//Interfaces in Go
+type shape interface {
+  area() float64
+  perimeter() float64
+}
+
+type rectan struct {
+    width, height float64
+}
+func (r rectan) area() float64 {
+    return r.width * r.height
+}
+func (r rectan) perimeter() float64 {
+    return 2*r.width + 2*r.height
+}
+
+type circle struct {
+    radius float64
+}
+func (c circle) area() float64 {
+    return math.Pi * c.radius * c.radius
+}
+func (c circle) perimeter() float64 {
+    return 2 * math.Pi * c.radius
+}
+
+
 func main() {
 	// myCar := car{}
 	// myCar.brand = "BMW"
@@ -110,10 +138,22 @@ func main() {
 
 
 	//Struct Methods
-	r := rectangle{
-		width:  5,
+	// r := rectangle{
+	// 	width:  5,
+	// 	height: 10,
+	// }
+	// fmt.Println(r.area()) //50
+
+
+	//Interfaces
+	r:=rectan{
+		width: 5,
 		height: 10,
 	}
-	fmt.Println(r.area()) //50
+	fmt.Println(r.area(), r.perimeter())
 
+	c:=circle{
+		radius: 20,
+	}
+	fmt.Println(c.area(), c.perimeter())
 }
