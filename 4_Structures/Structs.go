@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 type car struct {
 	brand      string
@@ -42,7 +44,7 @@ func canSendMessage(mToSend messageToSend) bool {
 
 //--------------------------------------------------------------
 
-//Embedded Structs
+// Embedded Structs
 type car2 struct {
 	make  string
 	model string
@@ -58,7 +60,7 @@ type truck struct {
 
 //------------------------------------------------------------------
 
-//Struct methods in Go
+// Struct methods in Go
 type rectangle struct {
 	width  int
 	height int
@@ -71,43 +73,73 @@ func (r rectangle) area() int {
 	return r.width * r.height
 }
 
-
 type authenticationInfo struct {
 	username string
 	password string
 }
-func (authI authenticationInfo) getBasicAuth() string{
+
+func (authI authenticationInfo) getBasicAuth() string {
 	return fmt.Sprintf("Authorization: Basic %s: %s", authI.username, authI.password)
 }
 
 //-------------------------------------------------------------------------
 
-//Interfaces in Go
+// Interfaces in Go
+// Interfaces are implemented implicitly.
 type shape interface {
-  area() float64
-  perimeter() float64
+	area() float64
+	perimeter() float64
 }
 
 type rectan struct {
-    width, height float64
+	width, height float64
 }
+
 func (r rectan) area() float64 {
-    return r.width * r.height
+	return r.width * r.height
 }
 func (r rectan) perimeter() float64 {
-    return 2*r.width + 2*r.height
+	return 2*r.width + 2*r.height
 }
 
 type circle struct {
-    radius float64
-}
-func (c circle) area() float64 {
-    return math.Pi * c.radius * c.radius
-}
-func (c circle) perimeter() float64 {
-    return 2 * math.Pi * c.radius
+	radius float64
 }
 
+func (c circle) area() float64 {
+	return math.Pi * c.radius * c.radius
+}
+func (c circle) perimeter() float64 {
+	return 2 * math.Pi * c.radius
+}
+
+// Multiple Interface
+type expense interface {
+	cost() int
+}
+
+type formatter interface {
+	format() string
+}
+
+type email struct {
+	isSubscribed bool
+	body         string
+}
+
+// ---------MI-----------------
+func (e email) cost() float64 {
+	if !e.isSubscribed {
+		return 0.05 * float64(len(e.body))
+	}
+	return 0.01 * float64(len(e.body))
+}
+
+func (e email) format() string {
+	return fmt.Sprintf(e.body)
+}
+
+//---------------------------------------------------------------------
 
 func main() {
 	// myCar := car{}
@@ -136,7 +168,6 @@ func main() {
 	// fmt.Println("Car:", myCar2)
 	// fmt.Println("Truck:", myTruck)
 
-
 	//Struct Methods
 	// r := rectangle{
 	// 	width:  5,
@@ -144,15 +175,14 @@ func main() {
 	// }
 	// fmt.Println(r.area()) //50
 
-
 	//Interfaces
-	r:=rectan{
-		width: 5,
+	r := rectan{
+		width:  5,
 		height: 10,
 	}
 	fmt.Println(r.area(), r.perimeter())
 
-	c:=circle{
+	c := circle{
 		radius: 20,
 	}
 	fmt.Println(c.area(), c.perimeter())
