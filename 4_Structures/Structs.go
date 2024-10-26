@@ -165,6 +165,19 @@ func (e email) format() string {
 
 // radius := c.radius
 
+
+//Type Switch
+func printNumericValue(num interface{}) {
+	switch v := num.(type) {
+	case int:
+		fmt.Printf("%T\n", v)
+	case string:
+		fmt.Printf("%T\n", v)
+	default:
+		fmt.Printf("%T\n", v)
+	}
+}
+
 func main() {
 	// myCar := car{}
 	// myCar.brand = "BMW"
@@ -210,5 +223,16 @@ func main() {
 	// 	radius: 20,
 	// }
 	// fmt.Println(c.area(), c.perimeter())
+
+
+	//Type Switch
+	printNumericValue(1)
+	// prints "int"
+
+	printNumericValue("1")
+	// prints "string"
+
+	printNumericValue(struct{}{})
+	// prints "struct {}"
 
 }
