@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+    "errors"
 )
 
 //ERROR
@@ -42,13 +43,21 @@ type divideError struct {
 func(de divideError) Error() string{
     return fmt.Sprintf("can not divide %v by zero", de.dividend)
 }
-//--------------------------------------------------------------------------------------------
 
 func divide(dividend, divisor float64) (float64, error) {
-	if divisor == 0 {
-		return 0, divideError{dividend: dividend}
+    if divisor == 0 {
+        return 0, divideError{dividend: dividend}
 	}
 	return dividend / divisor, nil
+}
+//--------------------------------------------------------------------------------------------
+
+//Error package
+func divides(x, y float64) (float64, error) {
+	if y == 0 {
+		return 0.0, errors.New("No dividing by 0")
+	}
+	return x / y, nil
 }
 
 func main() {
