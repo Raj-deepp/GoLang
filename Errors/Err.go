@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-//ERROR Interface
+//ERROR
 func sendSMSToCouple(msgToCustomer, msgToSpouse string) (int, error) {
 	costForCustomer, err :=sendSMS(msgToCustomer)
     if err != nil{
@@ -27,6 +27,29 @@ func sendSMS(message string) (int, error) {
 	return costPerChar * len(message), nil
 }
 //-----------------------------------------------------------------------------------------
+
+//Formating Strings
+func getSMSErrorString(cost float64, recipient string) string {
+	return fmt.Sprintf("SMS that costs $%.2f to be sent to %v can not be sent", cost, recipient)
+}
+
+
+//The Error Interface
+type divideError struct {
+	dividend float64
+}
+
+func(de divideError) Error() string{
+    return fmt.Sprintf("can not divide %v by zero", de.dividend)
+}
+//--------------------------------------------------------------------------------------------
+
+func divide(dividend, divisor float64) (float64, error) {
+	if divisor == 0 {
+		return 0, divideError{dividend: dividend}
+	}
+	return dividend / divisor, nil
+}
 
 func main() {
 	// Atoi converts a stringified number to an integer
