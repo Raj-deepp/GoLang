@@ -72,8 +72,34 @@ func getMessageCosts(messages []string) []float64 {
 
 //-------------------------------------------------------------------------------------------------
 
+//Variadic Function
+
+func concat(strs ...string) string {
+	final := ""
+	// strs is just a slice of strings
+	for i := 0; i < len(strs); i++ {
+		final += strs[i]
+	}
+	return final
+}
+
+func sum(nums ...int) int {
+	total := 0
+	for i := 0; i < len(nums); i++ {
+		total = total + nums[i]
+	}
+	return total
+}
+
 func main() {
-	messages, costs := get1MessageWithRetries("hello", "world", "!")
-	fmt.Println("Messages:", messages)
-	fmt.Println("Costs:", costs)
+	// messages, costs := get1MessageWithRetries("hello", "world", "!")
+	// fmt.Println("Messages:", messages)
+	// fmt.Println("Costs:", costs)
+
+	//concat variadic
+	final := concat("Hello ", "there ", "friend!")
+	fmt.Println(final)
+
+	sumOfNums := sum(1, 2, 3, 4)
+	fmt.Println(sumOfNums)
 }
