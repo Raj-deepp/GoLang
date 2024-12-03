@@ -69,16 +69,34 @@ func fizzbuzz() {
 	}
 }
 
+//------------------------------------------------------------------------------------------
+
+// Continue and Break
+func printPrimes(max int) {
+	for i := 2; i <= max; i++ {
+		isPrime := true
+		for j := 2; j*j <= i; j++ {
+			if i%j == 0 {
+				isPrime = false
+				break
+			}
+		}
+		if isPrime {
+			fmt.Println(i)
+		}
+	}
+}
+
 func main() {
-	// numMessages := 10
-	// totalCost := bulkSend(numMessages)
-	// fmt.Printf("The total cost for sending %d messages is: $%.2f\n", numMessages, totalCost)
+	numMessages := 10
+	totalCost := bulkSend(numMessages)
+	fmt.Printf("The total cost for sending %d messages is: $%.2f\n", numMessages, totalCost)
 
-	// threshold := 1000
-	// maxMsgs := maxMessages(threshold)
-	// fmt.Printf("The maximum number of messages that can be sent without exceeding %d is: %d\n", threshold, maxMsgs)
+	threshold := 1000
+	maxMsgs := maxMessages(threshold)
+	fmt.Printf("The maximum number of messages that can be sent without exceeding %d is: %d\n", threshold, maxMsgs)
 
-	//Type of While loop in Go
+	// Type of While loop in Go
 	plantHeight := 1
 	for plantHeight < 5 {
 		fmt.Println("still growing! current height:", plantHeight)
@@ -88,4 +106,7 @@ func main() {
 
 	//Fizzbuzz
 	fizzbuzz()
+
+	//Prime
+	printPrimes(10)
 }
