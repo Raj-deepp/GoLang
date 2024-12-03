@@ -121,10 +121,24 @@ func getCostsByDay(costs []cost) []float64 {
 	}
 	return costByDay
 }
+
 //-------------------------------------------------------------------------------------------------
 
+// Slice of Slices
+func createMatrix(rows, cols int) [][]int {
+	matrix := make([][]int, 0)
+	for i := 0; i < rows; i++ {
+		row := make([]int, 0)
+		for j := 0; j < cols; j++ {
+			row = append(row, i*j)
+		}
+		matrix = append(matrix, row)
+	}
+	return matrix
+}
+
 func main() {
-	messages, costs := get1MessageWithRetries("hello", "world", "!")
+	// messages, costs := get1MessageWithRetries("hello", "world", "!")
 	fmt.Println("Messages:", messages)
 	fmt.Println("Costs:", costs)
 
@@ -138,4 +152,10 @@ func main() {
 	//Spread (names...)
 	names := []string{"bob", "sue", "alice"}
 	printStrings(names...)
+
+	//Slice of Slices
+	matrix := createMatrix(10, 10)
+	for _, row := range matrix {
+		fmt.Println(row)
+	}
 }
