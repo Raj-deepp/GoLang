@@ -52,6 +52,23 @@ func getMaxMessagesToSend(costMultiplier float64, maxCostInPennies int) int {
 	return maxMessagesToSend
 }
 
+//--------------------------------------------------------------------------------------------
+
+// Fizzbuzz
+func fizzbuzz() {
+	for i := 1; i <= 100; i++ {
+		if i%3 == 0 && i%5 == 0 {
+			fmt.Println("fizznuzz")
+		} else if i%3 == 0 {
+			fmt.Println("fizz")
+		} else if i%5 == 0 {
+			fmt.Println("buzz")
+		} else {
+			fmt.Println(i)
+		}
+	}
+}
+
 func main() {
 	// numMessages := 10
 	// totalCost := bulkSend(numMessages)
@@ -68,4 +85,7 @@ func main() {
 		plantHeight++
 	}
 	fmt.Println("plant has grown to ", plantHeight, "inches")
+
+	//Fizzbuzz
+	fizzbuzz()
 }
