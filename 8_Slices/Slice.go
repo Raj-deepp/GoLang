@@ -101,6 +101,28 @@ func printStrings(strings ...string) {
 	}
 }
 
+//-------------------------------------------------------------------------------------------------
+
+//Append
+
+type cost struct {
+	day   int
+	value float64
+}
+
+func getCostsByDay(costs []cost) []float64 {
+	costByDay := []float64{}
+	for i := 0; i < len(costs); i++ {
+		cost := costs[i]
+		for cost.day >= len(costByDay) {
+			costByDay = append(costByDay, 0.0)
+		}
+		costByDay[cost.day] += cost.value
+	}
+	return costByDay
+}
+//-------------------------------------------------------------------------------------------------
+
 func main() {
 	messages, costs := get1MessageWithRetries("hello", "world", "!")
 	fmt.Println("Messages:", messages)
@@ -113,7 +135,7 @@ func main() {
 	sumOfNums := sum(1, 2, 3, 4)
 	fmt.Println(sumOfNums)
 
-	//Spread
+	//Spread (names...)
 	names := []string{"bob", "sue", "alice"}
 	printStrings(names...)
 }
