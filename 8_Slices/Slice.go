@@ -137,25 +137,46 @@ func createMatrix(rows, cols int) [][]int {
 	return matrix
 }
 
+//-------------------------------------------------------------------------------------------------
+
+//Range
+
+func indexOfFirstBadWord(msg []string, badWords []string) int {
+	for i, word := range msg {
+		for _, badbadWords := range badWords { //ignore returned values with an underscore _ instead of creating an unused variable.
+			if word == badbadWords {
+				return i
+			}
+		}
+	}
+	return -1
+}
+
 func main() {
-	// messages, costs := get1MessageWithRetries("hello", "world", "!")
-	fmt.Println("Messages:", messages)
-	fmt.Println("Costs:", costs)
+	// // messages, costs := get1MessageWithRetries("hello", "world", "!")
+	// fmt.Println("Messages:", messages)
+	// fmt.Println("Costs:", costs)
 
-	//concat variadic
-	final := concat("Hello ", "there ", "friend!")
-	fmt.Println(final)
+	// //concat variadic
+	// final := concat("Hello ", "there ", "friend!")
+	// fmt.Println(final)
 
-	sumOfNums := sum(1, 2, 3, 4)
-	fmt.Println(sumOfNums)
+	// sumOfNums := sum(1, 2, 3, 4)
+	// fmt.Println(sumOfNums)
 
-	//Spread (names...)
-	names := []string{"bob", "sue", "alice"}
-	printStrings(names...)
+	// //Spread (names...)
+	// names := []string{"bob", "sue", "alice"}
+	// printStrings(names...)
 
-	//Slice of Slices
-	matrix := createMatrix(10, 10)
-	for _, row := range matrix {
-		fmt.Println(row)
+	// //Slice of Slices
+	// matrix := createMatrix(10, 10)
+	// for _, row := range matrix {
+	// 	fmt.Println(row)
+	// }
+
+	//Range
+	fruits := []string{"apple", "banana", "grape"}
+	for i, fruit := range fruits {
+		fmt.Println(i, fruit)
 	}
 }
