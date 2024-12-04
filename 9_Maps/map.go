@@ -58,6 +58,38 @@ type user2 struct {
 	scheduledForDeletion bool
 }
 
+//-------------------------------------------------------------------------------------------------
+
+//Count Instances
+
+func getCounts(messagedUsers []string, validUsers map[string]int) {
+	for _, username := range messagedUsers {
+		if _, exists := validUsers[username]; exists {
+			validUsers[username]++
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+
+//Nested Maps
+
+func getNameCounts(names []string) map[rune]map[string]int {
+	counts := make(map[rune]map[string]int)
+	for _, name := range names {
+		if name == "" {
+			continue
+		}
+		firstChar := rune(name[0])
+		_, ok := counts[firstChar]
+		if !ok {
+			counts[firstChar] = make(map[string]int)
+		}
+		counts[firstChar][name]++
+	}
+	return counts
+}
+
 func main() {
 
 }
