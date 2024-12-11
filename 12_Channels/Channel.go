@@ -77,6 +77,25 @@ func getDBsChannel(numDBs int) (chan struct{}, *int) {
 	return ch, &count
 }
 
+//-------------------------------------------------------------------------------------------------
+
+//BUFFERED CHANNELS
+// We can provide a buffer length as the second argument to make() to create a buffered channel:
+// ch := make(chan int, 100)
+
+func addEmailsToQueue(emails []string) chan string {
+	emailChannel := make(chan string, len(emails))
+
+	for _, email := range emails {
+		emailChannel <- email
+	}
+	close(emailChannel)
+
+	return emailChannel
+}
+//-------------------------------------------------------------------------------------------------
+
+
 func main() {
 	// test("Hello there Kaladin!")
 	// test("Hi there Shallan!")
