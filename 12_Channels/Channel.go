@@ -93,8 +93,53 @@ func addEmailsToQueue(emails []string) chan string {
 
 	return emailChannel
 }
+
 //-------------------------------------------------------------------------------------------------
 
+// CLOSING CHANNELS
+func countReports(numSentCh chan int) int {
+	total := 0
+	for {
+		numSentCh, ok := <-numSentCh
+		if !ok {
+			break
+		}
+		total += numSentCh
+	}
+	return total
+}
+
+func sendReports(numBatches int, ch chan int) {
+	for i := 0; i < numBatches; i++ {
+		numReports := i*23 + 32%17
+		ch <- numReports
+	}
+	close(ch)
+}
+
+//-------------------------------------------------------------------------------------------------
+
+// RANGE in CHANNELS
+func concurrentFib(n int) {
+	chInts := make(chan int)
+	go func() {
+		fibonacci(n, chInts)
+	}()
+	for v := range chInts {
+		fmt.Println(v)
+	}
+}
+
+func fibonacci(n int, ch chan int) {
+	x, y := 0, 1
+	for i := 0; i < n; i++ {
+		ch <- x
+		x, y = y, x+y
+	}
+	close(ch)
+}
+
+//-------------------------------------------------------------------------------------------------
 
 func main() {
 	// test("Hello there Kaladin!")
