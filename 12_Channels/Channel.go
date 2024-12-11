@@ -170,6 +170,36 @@ func logEmail(email string) {
 
 //-------------------------------------------------------------------------------------------------
 
+//Select Default Case
+
+func saveBackups(snapshotTicker, saveAfter <-chan time.Time, logChan chan string) {
+	for {
+		select {
+		case <-snapshotTicker:
+			takeSnapshot()
+		case <-saveAfter:
+			saveSnapshot()
+			return
+		default:
+			waitForData()
+			time.Sleep(time.Millisecond * 500)
+		}
+	}
+}
+
+func takeSnapshot(logChan chan string) {
+	logChan <- "Taking a backup snapshot..."
+}
+
+func saveSnapshot(logChan chan string) {
+	logChan <- "All backups saved!"
+	close(logChan)
+}
+
+func waitForData(logChan chan string) {
+	logChan <- "Nothing to do, waiting..."
+}
+
 func main() {
 	// test("Hello there Kaladin!")
 	// test("Hi there Shallan!")
