@@ -176,12 +176,12 @@ func saveBackups(snapshotTicker, saveAfter <-chan time.Time, logChan chan string
 	for {
 		select {
 		case <-snapshotTicker:
-			takeSnapshot()
+			takeSnapshot(logChan)
 		case <-saveAfter:
-			saveSnapshot()
+			saveSnapshot(logChan)
 			return
 		default:
-			waitForData()
+			waitForData(logChan)
 			time.Sleep(time.Millisecond * 500)
 		}
 	}
@@ -206,10 +206,22 @@ func main() {
 	// test("Hey there Dalinar!")
 
 	//CHANNELS
-	emails := []email{
-		{"Email 1", time.Date(2019, time.December, 15, 0, 0, 0, 0, time.UTC)},
-		{"Email 2", time.Date(2021, time.January, 10, 0, 0, 0, 0, time.UTC)},
-		{"Email 3", time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)},
+	// emails := []email{
+	// 	{"Email 1", time.Date(2019, time.December, 15, 0, 0, 0, 0, time.UTC)},
+	// 	{"Email 2", time.Date(2021, time.January, 10, 0, 0, 0, 0, time.UTC)},
+	// 	{"Email 3", time.Date(2020, time.January, 1, 0, 0, 0, 0, time.UTC)},
+	// }
+	// filterOldEmails(emails)
+
+	//Select Default
+	snapshotTicker := time.NewTicker(2 * time.Second).C
+	saveAfter := time.After(10 * time.Second)
+	logChan := make(chan string)
+
+	go saveBackups(snapshotTicker, saveAfter, logChan)
+
+	// Log messages from the channel
+	for msg := range logChan {
+		fmt.Println(msg)
 	}
-	filterOldEmails(emails)
 }
