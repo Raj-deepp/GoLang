@@ -53,6 +53,30 @@ func filterOldEmails(emails []email) {
 
 //-------------------------------------------------------------------------------------------------
 
+// Empty structs are often used as a unary value. Sometimes, we don't care what is passed through a channel. We care when and if it is passed.
+// We can block and wait until something is sent on a channel using the following syntax:
+// <-ch
+func waitForDBs(numDBs int, dbChan chan struct{}) {
+	for i := 0; i < numDBs; i++ {
+		<-dbChan
+	}
+}
+
+func getDBsChannel(numDBs int) (chan struct{}, *int) {
+	count := 0
+	ch := make(chan struct{})
+
+	go func() {
+		for i := 0; i < numDBs; i++ {
+			ch <- struct{}{}
+			fmt.Printf("Database %v is online\n", i+1)
+			count++
+		}
+	}()
+
+	return ch, &count
+}
+
 func main() {
 	// test("Hello there Kaladin!")
 	// test("Hi there Shallan!")
