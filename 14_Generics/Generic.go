@@ -1,5 +1,7 @@
 package main
 
+import "errors"
+
 // Put simply, generics allow us to use variables to refer to specific types. This is an amazing feature because it allows us to write abstract functions that drastically reduce code duplication.
 
 // func splitAnySlice[T any](s []T) ([]T, []T) {
@@ -15,6 +17,21 @@ func getLast[T any](s []T) T {
 		return zeroVal
 	}
 	return s[len(s)-1]
+}
+
+//CONSTRAINTS
+type lineItem interface {
+	GetCost() float64
+	GetName() string
+}
+
+func chargeForLineItem[T lineItem](newItem T, oldItems []T, balance float64) ([]T, float64, error) {
+	newBalance := balance - newItem.GetCost()
+	if newBalance < 0.0 {
+		return nil, 0.0, errors.New("Insufficient Funds")
+	}
+	oldItems = append(oldItems, newItem)
+	return oldItems, newBalance, nil
 }
 
 func main() {
